@@ -107,8 +107,8 @@ export class ReportBuilder extends React.Component<
       ul: selectionContext.ul,
       ol: selectionContext.ol,
       table: selectionContext.table,
-      figure: selectionContext.figure ? newFig : selectionContext.figure
-      snapIndex: newSnapIndex
+      figure: selectionContext.figure ? newFig : selectionContext.figure,
+      snapIndex: newSnapIndex,
     });
   };
 
