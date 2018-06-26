@@ -77,12 +77,25 @@ export class ReportBuilder extends React.Component<
 
   componentDidMount() {
     document.addEventListener('selectionchange', this.handleSelectionChange, false);
+    // console.log(document.getElementsByTagName('img'))
+    // document.addEventListener('onresize', this.onresize, false);
+    // document.getElementsByTagName('figure')[0].addEventListener('onresize', this.onresize, false);
   }
 
+  getRandomSnap = snaps => snaps[Math.floor(Math.random() * snaps.length)];
+  
   handleSelectionChange = () => {
     var selectionContext = utils.getSelectionContext();
+    const fig = selectionContext.figure;
+    const newFig = Object.assign({}, fig);
+    const oldWidth = fig.node.children[0].width;
+    const fullWidth = fig.node.offsetWidth;
+    const snaps = [.25 *  fullWidth, .5 * fullWidth, .75 * fullWidth, 1 * fullWidth]
+    let newWidth = this.getRandomSnap(snaps);
+    newFig.node.children[0].width = newWidth.toString();  
+    newFig.node.style['text-align']='left';
     if (!selectionContext) return;
-    this.setState({
+    this.setState({   
       italic: selectionContext.italic,
       bold: selectionContext.bold,
       underline: selectionContext.underline,
@@ -91,7 +104,7 @@ export class ReportBuilder extends React.Component<
       ul: selectionContext.ul,
       ol: selectionContext.ol,
       table: selectionContext.table,
-      figure: selectionContext.figure
+      figure: newFig
     });
   };
 
@@ -131,6 +144,8 @@ export class ReportBuilder extends React.Component<
   }
 
   handleChange(evt: any) {
+    console.log(evt.target)
+    console.log(evt)
     this.handleSelectionChange();
     var pages: any = document.querySelectorAll('.' + styles.page);
     var pageClones = [];
@@ -162,7 +177,12 @@ export class ReportBuilder extends React.Component<
     this.setState({ zoom: e.target.value });
   };
 
+  onresize = e => {
+    console.log("ond ragend ........................")
+  }
+
   render() {
+    // document.getElementsByTagName("img")[2].addEventListener("onresize", this.onresize, false);
     var report: any = '';
     if (
       this.state.reports.length &&
@@ -177,15 +197,8 @@ export class ReportBuilder extends React.Component<
           var parsedReport = utils.parseShortcodes(report.pages[i], this.state.analysis);
         }
         pages.push(
-          <ContentEditable
-            key={i}
-            html={parsedReport}
-            disabled={false}
-            onChange={this.handleChange}
-            className={styles.page}
-            id={'page' + i}
-          />
-        );
+            <ContentEditable key={i} html={parsedReport} disabled={false} onChange={this.handleChange} className={styles.page} id={"page" + i} />
+          );
       }
     }
     return (
@@ -227,6 +240,7 @@ export class ReportBuilder extends React.Component<
                     type="number"
                     value={this.state.figure.width}
                     onChange={e => {
+                      console.log("is this called now")
                       var figure = this.state.figure;
                       figure.width = e.target.value;
                       this.setState({
