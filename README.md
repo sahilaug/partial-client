@@ -33,7 +33,8 @@ For the end to end tests, enter the command `yarn run e2e` to run the test suite
 ## SOLUTIONS TO DEVELOPER ASSIGNMENTS: 
 
 PARTA : 
-Resizing with snap feature: with the current implementation using react-contenteditable, we dont get the current width while resizing the image. I have divided the figure into 4 grid lines and the image snaps to one of them (one fourth, half, three fourth, or fullwidth)
+Resizing with snap feature: with the current implementation using react-contenteditable, we dont get the current width while resizing the image. So as a workaround, I have divided the figure into 4 grid lines and the image snaps to one of them (one fourth, half, three fourth, or fullwidth), and instead of snapping to the closest grid, I snap to the next width in order. Currently this resizing occurs on selection event.
+
 Cropping: TODO
 
 PARTB: Content Overflow: TODO

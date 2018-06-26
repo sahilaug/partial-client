@@ -28,6 +28,7 @@ export interface ReportBuilderState {
   tag: string;
   textAlign: string;
   zoom: number;
+  snapIndex: number;
 }
 
 interface Cell {
@@ -62,7 +63,8 @@ export class ReportBuilder extends React.Component<
       figure: false,
       tag: '',
       textAlign: '',
-      zoom: 100
+      zoom: 100,
+      snapIndex: 0,
     };
     this.getReports = this.getReports.bind(this);
     this.saveReport = this.saveReport.bind(this);
@@ -91,11 +93,12 @@ export class ReportBuilder extends React.Component<
     const snaps = [.25 *  fullWidth, .5 * fullWidth, .75 * fullWidth, 1 * fullWidth];
     // not able to get the current width while dragging using react-contenteditable
     // hence just taking a random snap instead to the closest snap
-    let newWidth = this.getRandomSnap(snaps);
+    const newSnapIndex = (this.state.snapIndex + 1) % 4;
+    let newWidth = snaps[newSnapIndex];
     newFig.node.children[0].width = newWidth.toString();  
     newFig.node.style['text-align']='left';
     if (!selectionContext) return;
-    this.setState({   
+    this.setState({
       italic: selectionContext.italic,
       bold: selectionContext.bold,
       underline: selectionContext.underline,
@@ -104,7 +107,8 @@ export class ReportBuilder extends React.Component<
       ul: selectionContext.ul,
       ol: selectionContext.ol,
       table: selectionContext.table,
-      figure: newFig
+      figure: selectionContext.figure ? newFig : selectionContext.figure
+      snapIndex: newSnapIndex
     });
   };
 
