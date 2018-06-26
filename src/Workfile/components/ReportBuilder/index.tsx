@@ -77,9 +77,6 @@ export class ReportBuilder extends React.Component<
 
   componentDidMount() {
     document.addEventListener('selectionchange', this.handleSelectionChange, false);
-    // console.log(document.getElementsByTagName('img'))
-    // document.addEventListener('onresize', this.onresize, false);
-    // document.getElementsByTagName('figure')[0].addEventListener('onresize', this.onresize, false);
   }
 
   getRandomSnap = snaps => snaps[Math.floor(Math.random() * snaps.length)];
@@ -90,7 +87,10 @@ export class ReportBuilder extends React.Component<
     const newFig = Object.assign({}, fig);
     const oldWidth = fig.node.children[0].width;
     const fullWidth = fig.node.offsetWidth;
-    const snaps = [.25 *  fullWidth, .5 * fullWidth, .75 * fullWidth, 1 * fullWidth]
+    // divide the width into 4 snaps
+    const snaps = [.25 *  fullWidth, .5 * fullWidth, .75 * fullWidth, 1 * fullWidth];
+    // not able to get the current width while dragging using react-contenteditable
+    // hence just taking a random snap instead to the closest snap
     let newWidth = this.getRandomSnap(snaps);
     newFig.node.children[0].width = newWidth.toString();  
     newFig.node.style['text-align']='left';
@@ -144,8 +144,6 @@ export class ReportBuilder extends React.Component<
   }
 
   handleChange(evt: any) {
-    console.log(evt.target)
-    console.log(evt)
     this.handleSelectionChange();
     var pages: any = document.querySelectorAll('.' + styles.page);
     var pageClones = [];
@@ -177,12 +175,7 @@ export class ReportBuilder extends React.Component<
     this.setState({ zoom: e.target.value });
   };
 
-  onresize = e => {
-    console.log("ond ragend ........................")
-  }
-
   render() {
-    // document.getElementsByTagName("img")[2].addEventListener("onresize", this.onresize, false);
     var report: any = '';
     if (
       this.state.reports.length &&
