@@ -140,6 +140,12 @@
     "@types/node" "*"
     "@types/react" "*"
 
+"@types/react-image-crop@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-image-crop/-/react-image-crop-3.0.0.tgz#b4b9f621fb4f57cded81f046df0c5947c3e9dbc1"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-leaflet@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@types/react-leaflet/-/react-leaflet-1.1.4.tgz#75b46ae80282883614962be5d59d1774e90cab25"
@@ -6283,6 +6289,10 @@ react-draggable@^3.0.4:
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
+
+react-image-crop@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-4.0.1.tgz#8a9c441dfe9c3af9dd988528dade340d7aa65a06"
 
 react-leaflet@^1.7.1:
   version "1.7.3"

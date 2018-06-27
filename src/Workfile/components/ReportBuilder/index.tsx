@@ -11,6 +11,7 @@ import * as styles from './styles.css';
 import { PageProps, ReportBuilderAction, Report, CloseFunction } from '../../../types/Report';
 import { Tract as ITract, File as IFile, Sale as ISale } from '../../../types';
 import ReportService from '../../../services/reports';
+import ReactCrop from 'react-image-crop';
 
 export interface ReportBuilderState {
   reports: Report[];
@@ -92,7 +93,7 @@ export class ReportBuilder extends React.Component<
     // divide the width into 4 snaps
     const snaps = [.25 *  fullWidth, .5 * fullWidth, .75 * fullWidth, 1 * fullWidth];
     // not able to get the current width while dragging using react-contenteditable
-    // hence just taking a random snap instead to the closest snap
+    // hence just taking the next snap instead to the closest snap
     const newSnapIndex = (this.state.snapIndex + 1) % 4;
     let newWidth = snaps[newSnapIndex];
     newFig.node.children[0].width = newWidth.toString();  
@@ -224,7 +225,7 @@ export class ReportBuilder extends React.Component<
           </div>
         </Toolbar>
         <div className={styles.pages}>
-          <div style={{ zoom: this.state.zoom / 100 }}>{pages}</div>
+          <div style={{ zoom: this.state.zoom / 100}}>{pages}</div>
         </div>
         <div className={styles.ContextSidebar}>
           {this.state.figure ? (
